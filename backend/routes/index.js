@@ -1,5 +1,9 @@
 import express ,{Router} from 'express';  
 import {getUmbrella,weatherStateToday,weatherStateTomorrow} from './actions'
+
+// Import index action from weather controller
+import { index } from '../controllers/weather'
+
 const router=Router();
 
 //test
@@ -20,6 +24,9 @@ router.get('/weather',(req,res)=>{
     });
     
 })
+
+router.route('/weather.json')
+        .get(index);
 
 
 
