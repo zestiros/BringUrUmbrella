@@ -1,6 +1,46 @@
-import Weather from '../models/weather';
+import Weather from '../models/weather'
+import weatherFunctions from './actions'
+import cities from '../assets/city.list.min.json'
 
-export const index = (req, res, next) => {
-    // Find all movies and return json response
-    Weather.find().lean().exec((err, weathers) => res.json(weathers));
+const getCoord=(i)=>{
+    return {
+        'lat' : cities[i].coord.lat,
+        'lon' : cities[i].coord.lon
+    }
+}
+
+/*
+export const test=(req,res)=>{
+    weatherFunctions.getUmbrella(lat,lon).then(function (response) {
+        var test=JSON.stringify({
+            'today':weatherFunctions.weatherStateToday(response),
+            'tomorrow':weatherFunctions.weatherStateTomorrow(response)
+        })
+        console.log(response)
+        res.send(test) // now the data is accessable from here.
+    }).catch(function (err) {
+        console.log(err);
+    });
+    
+}
+*/
+
+export const getWeatherStateClient = function (req, res) {
+    
+    
+    
+    //find a location weather based on the geo coordinates
+    Weather.find({ 'city.coord.lat': Number(req.body.lat), //we'll replace it after we finish the frontend 
+                    'city.coord.lon':Number(req.body.lon)
+                 }, 
+                 function (err, weather) {
+                        if (err) throw err
+                        //Print city name
+                        res.send(weather)
+                }
+    )
+   
+    
 };
+
+

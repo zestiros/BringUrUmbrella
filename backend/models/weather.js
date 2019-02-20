@@ -1,12 +1,19 @@
-import mongoose, { Schema } from 'mongoose';
 
+const mongoose=require('mongoose')
 // Define movie schema
-var weatherSchema = new Schema({
-  id:{
-      type : Number,
-      unique:true
-  }
-});
+var weatherSchema = new mongoose.Schema({
+  
+  "city":{
+    "id":{type: Number , unique:true},
+    "name":{type:String},
+    "coord":{
+    "lat":{type:Number},
+    "lon":{type:Number}
+    },
+    "country":{type:String}
+    }
+},{ strict: false });
+
 
 // Export Mongoose model
-export default mongoose.model('weather', weatherSchema);
+module.exports=mongoose.model('weather', weatherSchema);
